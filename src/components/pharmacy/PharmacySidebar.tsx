@@ -1,9 +1,8 @@
 import {
   LayoutDashboard, Package, ShoppingCart, FileBarChart,
-  AlertTriangle, Pill,
+  AlertTriangle, Pill, Truck, Users, ClipboardList, FileText, RotateCcw, Bell,
 } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
-import { useLocation } from 'react-router-dom';
 import { usePharmacy } from '@/contexts/PharmacyContext';
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -11,20 +10,60 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
-const navItems = [
+const mainNav = [
   { title: 'لوحة التحكم', url: '/', icon: LayoutDashboard },
-  { title: 'المخزون', url: '/inventory', icon: Package },
   { title: 'نقطة البيع', url: '/pos', icon: ShoppingCart },
+  { title: 'المخزون', url: '/inventory', icon: Package },
+  { title: 'الوصفات الطبية', url: '/prescriptions', icon: FileText },
+];
+
+const managementNav = [
+  { title: 'الموردين', url: '/suppliers', icon: Truck },
+  { title: 'العملاء', url: '/customers', icon: Users },
+  { title: 'طلبات الشراء', url: '/purchase-orders', icon: ClipboardList },
+  { title: 'المرتجعات', url: '/returns', icon: RotateCcw },
+];
+
+const otherNav = [
   { title: 'التقارير', url: '/reports', icon: FileBarChart },
+  { title: 'التنبيهات', url: '/notifications', icon: Bell },
 ];
 
 export function PharmacySidebar() {
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
-  const location = useLocation();
-  const { getLowStockMedicines } = usePharmacy();
+  const { getLowStockMedicines, unreadNotificationsCount } = usePharmacy();
   const lowStock = getLowStockMedicines().length;
+
+  const renderNavItems = (items: typeof mainNav, badges?: Record<string, number>) => (
+    <SidebarMenu>
+      {items.map((item) => {
+        const badgeCount = badges?.[item.url] || 0;
+        return (
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton asChild>
+              <NavLink
+                to={item.url}
+                end={item.url === '/'}
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-sidebar-accent"
+                activeClassName="bg-sidebar-accent text-sidebar-primary font-semibold"
+              >
+                <item.icon className="h-5 w-5 shrink-0" />
+                {!collapsed && <span className="flex-1">{item.title}</span>}
+                {!collapsed && badgeCount > 0 && (
+                  <Badge variant="destructive" className="mr-auto text-xs px-1.5 py-0.5 min-w-[20px] justify-center">
+                    {badgeCount}
+                  </Badge>
+                )}
+              </NavLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        );
+      })}
+    </SidebarMenu>
+  );
 
   return (
     <Sidebar collapsible="icon" className="sidebar-glow border-l-0">
@@ -35,30 +74,25 @@ export function PharmacySidebar() {
             {!collapsed && <span className="text-lg font-bold text-sidebar-primary">فارما بلس</span>}
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {navItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      end={item.url === '/'}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-sidebar-accent"
-                      activeClassName="bg-sidebar-accent text-sidebar-primary font-semibold"
-                    >
-                      <item.icon className="h-5 w-5 shrink-0" />
-                      {!collapsed && (
-                        <span className="flex-1">{item.title}</span>
-                      )}
-                      {!collapsed && item.url === '/inventory' && lowStock > 0 && (
-                        <Badge variant="destructive" className="mr-auto text-xs px-1.5 py-0.5 min-w-[20px] justify-center">
-                          {lowStock}
-                        </Badge>
-                      )}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            {renderNavItems(mainNav, { '/inventory': lowStock })}
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {!collapsed && <Separator className="mx-3 bg-sidebar-border" />}
+
+        <SidebarGroup>
+          {!collapsed && <SidebarGroupLabel className="px-4 text-xs text-sidebar-foreground/50">الإدارة</SidebarGroupLabel>}
+          <SidebarGroupContent>
+            {renderNavItems(managementNav)}
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {!collapsed && <Separator className="mx-3 bg-sidebar-border" />}
+
+        <SidebarGroup>
+          {!collapsed && <SidebarGroupLabel className="px-4 text-xs text-sidebar-foreground/50">أخرى</SidebarGroupLabel>}
+          <SidebarGroupContent>
+            {renderNavItems(otherNav, { '/notifications': unreadNotificationsCount })}
           </SidebarGroupContent>
         </SidebarGroup>
 
