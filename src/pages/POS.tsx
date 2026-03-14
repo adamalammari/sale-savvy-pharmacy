@@ -6,16 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-import { Search, Plus, Minus, Trash2, ShoppingCart, CreditCard, Banknote, Shield, Receipt } from 'lucide-react';
+import { Search, Plus, Minus, Trash2, ShoppingCart, CreditCard, Banknote, Shield, Receipt, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function POS() {
-  const { medicines, cart, addToCart, removeFromCart, updateCartQuantity, clearCart, completeSale, getCartTotal } = usePharmacy();
+  const { medicines, cart, addToCart, removeFromCart, updateCartQuantity, clearCart, completeSale, getCartTotal, customers } = usePharmacy();
   const [search, setSearch] = useState('');
   const [discount, setDiscount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'card' | 'insurance'>('cash');
   const [customerName, setCustomerName] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const searchResults = search.length >= 1
     ? medicines.filter(m => m.name.includes(search) || m.genericName.toLowerCase().includes(search.toLowerCase()) || m.barcode.includes(search)).slice(0, 8)
