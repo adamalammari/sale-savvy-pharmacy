@@ -6,16 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-import { Search, Plus, Minus, Trash2, ShoppingCart, CreditCard, Banknote, Shield, Receipt } from 'lucide-react';
+import { Search, Plus, Minus, Trash2, ShoppingCart, CreditCard, Banknote, Shield, Receipt, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function POS() {
-  const { medicines, cart, addToCart, removeFromCart, updateCartQuantity, clearCart, completeSale, getCartTotal } = usePharmacy();
+  const { medicines, cart, addToCart, removeFromCart, updateCartQuantity, clearCart, completeSale, getCartTotal, customers } = usePharmacy();
   const [search, setSearch] = useState('');
   const [discount, setDiscount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'card' | 'insurance'>('cash');
   const [customerName, setCustomerName] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const searchResults = search.length >= 1
     ? medicines.filter(m => m.name.includes(search) || m.genericName.toLowerCase().includes(search.toLowerCase()) || m.barcode.includes(search)).slice(0, 8)
@@ -29,11 +30,12 @@ export default function POS() {
       toast.error('السلة فارغة');
       return;
     }
-    const sale = completeSale(paymentMethod, discount, customerName || undefined);
+    const sale = completeSale(paymentMethod, discount, customerName || undefined, customerId || undefined);
     if (sale) {
       toast.success(`تم إتمام البيع بنجاح - فاتورة ${sale.invoiceNumber}`);
       setDiscount(0);
       setCustomerName('');
+      setCustomerId('');
     }
   };
 
@@ -136,7 +138,12 @@ export default function POS() {
           <Separator className="mb-4" />
 
           {/* Customer */}
-          <Input placeholder="اسم العميل (اختياري)" value={customerName} onChange={e => setCustomerName(e.target.value)} className="mb-3" />
+          {/* Customer */}
+          <Select value={customerId} onValueChange={v => { setCustomerId(v); const c = customers.find(c => c.id === v); if (c) setCustomerName(c.name); }}>
+            <SelectTrigger className="mb-2"><User className="h-4 w-4 ml-2" /><SelectValue placeholder="اختر عميل مسجل" /></SelectTrigger>
+            <SelectContent>{customers.map(c => <SelectItem key={c.id} value={c.id}>{c.name} - {c.phone}</SelectItem>)}</SelectContent>
+          </Select>
+          <Input placeholder="أو اكتب اسم العميل" value={customerName} onChange={e => setCustomerName(e.target.value)} className="mb-3" />
 
           {/* Discount */}
           <div className="flex items-center gap-2 mb-3">
