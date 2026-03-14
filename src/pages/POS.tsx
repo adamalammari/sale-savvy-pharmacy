@@ -30,11 +30,12 @@ export default function POS() {
       toast.error('السلة فارغة');
       return;
     }
-    const sale = completeSale(paymentMethod, discount, customerName || undefined);
+    const sale = completeSale(paymentMethod, discount, customerName || undefined, customerId || undefined);
     if (sale) {
       toast.success(`تم إتمام البيع بنجاح - فاتورة ${sale.invoiceNumber}`);
       setDiscount(0);
       setCustomerName('');
+      setCustomerId('');
     }
   };
 
