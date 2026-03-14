@@ -138,7 +138,12 @@ export default function POS() {
           <Separator className="mb-4" />
 
           {/* Customer */}
-          <Input placeholder="اسم العميل (اختياري)" value={customerName} onChange={e => setCustomerName(e.target.value)} className="mb-3" />
+          {/* Customer */}
+          <Select value={customerId} onValueChange={v => { setCustomerId(v); const c = customers.find(c => c.id === v); if (c) setCustomerName(c.name); }}>
+            <SelectTrigger className="mb-2"><User className="h-4 w-4 ml-2" /><SelectValue placeholder="اختر عميل مسجل" /></SelectTrigger>
+            <SelectContent>{customers.map(c => <SelectItem key={c.id} value={c.id}>{c.name} - {c.phone}</SelectItem>)}</SelectContent>
+          </Select>
+          <Input placeholder="أو اكتب اسم العميل" value={customerName} onChange={e => setCustomerName(e.target.value)} className="mb-3" />
 
           {/* Discount */}
           <div className="flex items-center gap-2 mb-3">
