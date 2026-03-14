@@ -13,9 +13,12 @@ import { Search, Plus, Edit2, Trash2, Truck, Star, Phone, Mail, MapPin } from 'l
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
-const emptySupplier = {
+const emptySupplier: {
+  name: string; contactPerson: string; phone: string; email: string; address: string;
+  totalOrders: number; totalAmount: number; rating: number; status: 'active' | 'inactive';
+} = {
   name: '', contactPerson: '', phone: '', email: '', address: '',
-  totalOrders: 0, totalAmount: 0, rating: 3, status: 'active' as const,
+  totalOrders: 0, totalAmount: 0, rating: 3, status: 'active',
 };
 
 export default function Suppliers() {
