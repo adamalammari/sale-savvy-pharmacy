@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Search, Plus, Edit2, Trash2, Users, Heart, ShieldCheck, Eye } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+
 
 const emptyCustomer = {
   name: '', phone: '', email: '', address: '', insuranceProvider: '', insuranceNumber: '',
