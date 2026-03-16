@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, RotateCcw, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+
 
 export default function Returns() {
   const { returns, addReturn, updateReturnStatus, sales } = usePharmacy();
@@ -110,40 +110,42 @@ export default function Returns() {
 
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-right">الفاتورة</TableHead>
-                <TableHead className="text-right">التاريخ</TableHead>
-                <TableHead className="text-right">المنتجات</TableHead>
-                <TableHead className="text-right">السبب</TableHead>
-                <TableHead className="text-right">المبلغ</TableHead>
-                <TableHead className="text-right">الحالة</TableHead>
-                <TableHead className="text-right">إجراءات</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {returns.map((r, i) => (
-                <motion.tr key={r.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }} className="border-b hover:bg-muted/50">
-                  <TableCell className="font-medium">{r.invoiceNumber}</TableCell>
-                  <TableCell className="text-sm">{new Date(r.date).toLocaleDateString('ar-SA')}</TableCell>
-                  <TableCell><Badge variant="secondary">{r.items.length} منتج</Badge></TableCell>
-                  <TableCell className="text-sm max-w-[200px] truncate">{r.reason}</TableCell>
-                  <TableCell className="font-bold">{r.totalRefund} ر.س</TableCell>
-                  <TableCell>{getStatusBadge(r.status)}</TableCell>
-                  <TableCell>
-                    {r.status === 'pending' && (
-                      <div className="flex gap-1">
-                        <Button variant="ghost" size="sm" className="text-xs text-success" onClick={() => { updateReturnStatus(r.id, 'approved'); toast.success('تمت الموافقة وتحديث المخزون'); }}>موافقة</Button>
-                        <Button variant="ghost" size="sm" className="text-xs text-destructive" onClick={() => { updateReturnStatus(r.id, 'rejected'); toast.success('تم رفض المرتجع'); }}>رفض</Button>
-                      </div>
-                    )}
-                  </TableCell>
-                </motion.tr>
-              ))}
-              {returns.length === 0 && <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">لا توجد مرتجعات</TableCell></TableRow>}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-right min-w-[90px]">الفاتورة</TableHead>
+                  <TableHead className="text-right min-w-[90px]">التاريخ</TableHead>
+                  <TableHead className="text-right min-w-[80px]">المنتجات</TableHead>
+                  <TableHead className="text-right min-w-[120px]">السبب</TableHead>
+                  <TableHead className="text-right min-w-[80px]">المبلغ</TableHead>
+                  <TableHead className="text-right min-w-[100px]">الحالة</TableHead>
+                  <TableHead className="text-right min-w-[100px]">إجراءات</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {returns.map((r) => (
+                  <TableRow key={r.id} className="hover:bg-muted/50">
+                    <TableCell className="font-medium whitespace-nowrap">{r.invoiceNumber}</TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{new Date(r.date).toLocaleDateString('ar-SA')}</TableCell>
+                    <TableCell><Badge variant="secondary">{r.items.length} منتج</Badge></TableCell>
+                    <TableCell className="text-sm max-w-[150px] truncate">{r.reason}</TableCell>
+                    <TableCell className="font-bold whitespace-nowrap">{r.totalRefund} ر.س</TableCell>
+                    <TableCell>{getStatusBadge(r.status)}</TableCell>
+                    <TableCell>
+                      {r.status === 'pending' && (
+                        <div className="flex gap-1">
+                          <Button variant="ghost" size="sm" className="text-xs h-8 px-2 text-success" onClick={() => { updateReturnStatus(r.id, 'approved'); toast.success('تمت الموافقة وتحديث المخزون'); }}>موافقة</Button>
+                          <Button variant="ghost" size="sm" className="text-xs h-8 px-2 text-destructive" onClick={() => { updateReturnStatus(r.id, 'rejected'); toast.success('تم رفض المرتجع'); }}>رفض</Button>
+                        </div>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {returns.length === 0 && <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">لا توجد مرتجعات</TableCell></TableRow>}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>
