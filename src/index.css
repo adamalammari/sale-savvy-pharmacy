@@ -89,4 +89,28 @@
   .sidebar-glow {
     box-shadow: 4px 0 24px -4px hsl(168 72% 36% / 0.15);
   }
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fix table layout for RTL */
+table {
+  table-layout: auto;
+  width: 100%;
+}
+
+/* Ensure proper scrolling in main content */
+main {
+  overflow-x: hidden;
+}
+
+/* Prevent content overflow */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
 }
