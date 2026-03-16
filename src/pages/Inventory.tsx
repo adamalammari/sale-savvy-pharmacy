@@ -12,7 +12,7 @@ import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Search, Plus, Edit2, Trash2, Package, AlertTriangle, Filter } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+
 
 const emptyMedicine = {
   name: '', genericName: '', category: categories[0], price: 0, costPrice: 0,

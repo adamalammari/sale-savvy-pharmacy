@@ -142,36 +142,38 @@ export default function Prescriptions() {
 
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-right">الرقم</TableHead>
-                <TableHead className="text-right">المريض</TableHead>
-                <TableHead className="text-right">الطبيب</TableHead>
-                <TableHead className="text-right">الأدوية</TableHead>
-                <TableHead className="text-right">التاريخ</TableHead>
-                <TableHead className="text-right">التأمين</TableHead>
-                <TableHead className="text-right">الحالة</TableHead>
-                <TableHead className="text-right">إجراءات</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filtered.map((rx, i) => (
-                <motion.tr key={rx.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }} className="border-b hover:bg-muted/50">
-                  <TableCell className="font-mono text-sm">{rx.id}</TableCell>
-                  <TableCell className="font-medium text-sm">{rx.customerName}</TableCell>
-                  <TableCell className="text-sm">{rx.doctorName}</TableCell>
-                  <TableCell><Badge variant="secondary">{rx.items.length} دواء</Badge></TableCell>
-                  <TableCell className="text-sm">{new Date(rx.date).toLocaleDateString('ar-SA')}</TableCell>
-                  <TableCell>{rx.insuranceCovered ? <Badge variant="outline" className="text-xs">مؤمّن</Badge> : <span className="text-xs text-muted-foreground">-</span>}</TableCell>
-                  <TableCell>{getStatusBadge(rx.status)}</TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon" onClick={() => setViewId(rx.id)}><Eye className="h-4 w-4" /></Button>
-                  </TableCell>
-                </motion.tr>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-right min-w-[80px]">الرقم</TableHead>
+                  <TableHead className="text-right min-w-[100px]">المريض</TableHead>
+                  <TableHead className="text-right min-w-[100px]">الطبيب</TableHead>
+                  <TableHead className="text-right min-w-[70px]">الأدوية</TableHead>
+                  <TableHead className="text-right min-w-[90px]">التاريخ</TableHead>
+                  <TableHead className="text-right min-w-[60px]">التأمين</TableHead>
+                  <TableHead className="text-right min-w-[90px]">الحالة</TableHead>
+                  <TableHead className="text-right min-w-[60px]">عرض</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((rx) => (
+                  <TableRow key={rx.id} className="hover:bg-muted/50">
+                    <TableCell className="font-mono text-xs">{rx.id.slice(0, 8)}</TableCell>
+                    <TableCell className="font-medium text-sm">{rx.customerName}</TableCell>
+                    <TableCell className="text-sm">{rx.doctorName}</TableCell>
+                    <TableCell><Badge variant="secondary">{rx.items.length} دواء</Badge></TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{new Date(rx.date).toLocaleDateString('ar-SA')}</TableCell>
+                    <TableCell>{rx.insuranceCovered ? <Badge variant="outline" className="text-xs">مؤمّن</Badge> : <span className="text-xs text-muted-foreground">-</span>}</TableCell>
+                    <TableCell>{getStatusBadge(rx.status)}</TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setViewId(rx.id)}><Eye className="h-4 w-4" /></Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 

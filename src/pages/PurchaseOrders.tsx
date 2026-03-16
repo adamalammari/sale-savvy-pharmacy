@@ -124,48 +124,49 @@ export default function PurchaseOrders() {
         <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><div className="rounded-xl bg-destructive/10 p-3"><XCircle className="h-5 w-5 text-destructive" /></div><div><p className="text-xs text-muted-foreground">ملغي</p><p className="text-xl font-bold">{purchaseOrders.filter(o => o.status === 'cancelled').length}</p></div></div></CardContent></Card>
       </div>
 
-      {/* Orders Table */}
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-right">رقم الطلب</TableHead>
-                <TableHead className="text-right">المورد</TableHead>
-                <TableHead className="text-right">المنتجات</TableHead>
-                <TableHead className="text-right">الإجمالي</TableHead>
-                <TableHead className="text-right">التاريخ</TableHead>
-                <TableHead className="text-right">الحالة</TableHead>
-                <TableHead className="text-right">إجراءات</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {purchaseOrders.map((order, i) => (
-                <motion.tr key={order.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }} className="border-b hover:bg-muted/50">
-                  <TableCell className="font-medium font-mono">{order.id.toUpperCase()}</TableCell>
-                  <TableCell className="text-sm">{order.supplierName}</TableCell>
-                  <TableCell><Badge variant="secondary">{order.items.length} منتج</Badge></TableCell>
-                  <TableCell className="font-bold">{order.total.toLocaleString()} ر.س</TableCell>
-                  <TableCell className="text-sm">{new Date(order.orderDate).toLocaleDateString('ar-SA')}</TableCell>
-                  <TableCell>{getStatusBadge(order.status)}</TableCell>
-                  <TableCell>
-                    <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => setViewOrder(order.id)}><Eye className="h-4 w-4" /></Button>
-                      {order.status === 'pending' && (
-                        <>
-                          <Button variant="ghost" size="sm" className="text-xs" onClick={() => { updatePurchaseOrderStatus(order.id, 'ordered'); toast.success('تم تأكيد الطلب'); }}>تأكيد</Button>
-                          <Button variant="ghost" size="sm" className="text-xs text-destructive" onClick={() => { updatePurchaseOrderStatus(order.id, 'cancelled'); toast.success('تم إلغاء الطلب'); }}>إلغاء</Button>
-                        </>
-                      )}
-                      {order.status === 'ordered' && (
-                        <Button variant="ghost" size="sm" className="text-xs text-success" onClick={() => { updatePurchaseOrderStatus(order.id, 'received'); toast.success('تم استلام الطلب وتحديث المخزون'); }}>استلام</Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </motion.tr>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-right min-w-[100px]">رقم الطلب</TableHead>
+                  <TableHead className="text-right min-w-[100px]">المورد</TableHead>
+                  <TableHead className="text-right min-w-[80px]">المنتجات</TableHead>
+                  <TableHead className="text-right min-w-[90px]">الإجمالي</TableHead>
+                  <TableHead className="text-right min-w-[90px]">التاريخ</TableHead>
+                  <TableHead className="text-right min-w-[100px]">الحالة</TableHead>
+                  <TableHead className="text-right min-w-[120px]">إجراءات</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {purchaseOrders.map((order) => (
+                  <TableRow key={order.id} className="hover:bg-muted/50">
+                    <TableCell className="font-medium font-mono text-xs">{order.id.toUpperCase().slice(0, 10)}</TableCell>
+                    <TableCell className="text-sm">{order.supplierName}</TableCell>
+                    <TableCell><Badge variant="secondary">{order.items.length} منتج</Badge></TableCell>
+                    <TableCell className="font-bold whitespace-nowrap">{order.total.toLocaleString()} ر.س</TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{new Date(order.orderDate).toLocaleDateString('ar-SA')}</TableCell>
+                    <TableCell>{getStatusBadge(order.status)}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-1 flex-wrap">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setViewOrder(order.id)}><Eye className="h-4 w-4" /></Button>
+                        {order.status === 'pending' && (
+                          <>
+                            <Button variant="ghost" size="sm" className="text-xs h-8 px-2" onClick={() => { updatePurchaseOrderStatus(order.id, 'ordered'); toast.success('تم تأكيد الطلب'); }}>تأكيد</Button>
+                            <Button variant="ghost" size="sm" className="text-xs h-8 px-2 text-destructive" onClick={() => { updatePurchaseOrderStatus(order.id, 'cancelled'); toast.success('تم إلغاء الطلب'); }}>إلغاء</Button>
+                          </>
+                        )}
+                        {order.status === 'ordered' && (
+                          <Button variant="ghost" size="sm" className="text-xs h-8 px-2 text-success" onClick={() => { updatePurchaseOrderStatus(order.id, 'received'); toast.success('تم استلام الطلب وتحديث المخزون'); }}>استلام</Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 

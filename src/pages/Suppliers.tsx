@@ -117,45 +117,46 @@ export default function Suppliers() {
         <Input className="pr-9" placeholder="بحث عن مورد..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
-      {/* Table */}
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-right">المورد</TableHead>
-                <TableHead className="text-right">المسؤول</TableHead>
-                <TableHead className="text-right">الهاتف</TableHead>
-                <TableHead className="text-right">الطلبات</TableHead>
-                <TableHead className="text-right">التقييم</TableHead>
-                <TableHead className="text-right">الحالة</TableHead>
-                <TableHead className="text-right">إجراءات</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filtered.map((s, i) => (
-                <motion.tr key={s.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }} className="border-b hover:bg-muted/50">
-                  <TableCell>
-                    <div>
-                      <p className="font-medium text-sm">{s.name}</p>
-                      <p className="text-xs text-muted-foreground">{s.address}</p>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-sm">{s.contactPerson}</TableCell>
-                  <TableCell className="text-sm font-mono">{s.phone}</TableCell>
-                  <TableCell><Badge variant="secondary">{s.totalOrders} طلب</Badge></TableCell>
-                  <TableCell><span className="text-sm">{'⭐'.repeat(s.rating)}</span></TableCell>
-                  <TableCell><Badge variant={s.status === 'active' ? 'default' : 'secondary'}>{s.status === 'active' ? 'نشط' : 'غير نشط'}</Badge></TableCell>
-                  <TableCell>
-                    <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(s)}><Edit2 className="h-4 w-4" /></Button>
-                      <Button variant="ghost" size="icon" className="text-destructive" onClick={() => { deleteSupplier(s.id); toast.success('تم حذف المورد'); }}><Trash2 className="h-4 w-4" /></Button>
-                    </div>
-                  </TableCell>
-                </motion.tr>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-right min-w-[140px]">المورد</TableHead>
+                  <TableHead className="text-right min-w-[100px]">المسؤول</TableHead>
+                  <TableHead className="text-right min-w-[100px]">الهاتف</TableHead>
+                  <TableHead className="text-right min-w-[80px]">الطلبات</TableHead>
+                  <TableHead className="text-right min-w-[80px]">التقييم</TableHead>
+                  <TableHead className="text-right min-w-[70px]">الحالة</TableHead>
+                  <TableHead className="text-right min-w-[80px]">إجراءات</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((s) => (
+                  <TableRow key={s.id} className="hover:bg-muted/50">
+                    <TableCell>
+                      <div>
+                        <p className="font-medium text-sm">{s.name}</p>
+                        <p className="text-xs text-muted-foreground truncate max-w-[140px]">{s.address}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-sm">{s.contactPerson}</TableCell>
+                    <TableCell className="text-sm font-mono whitespace-nowrap">{s.phone}</TableCell>
+                    <TableCell><Badge variant="secondary">{s.totalOrders} طلب</Badge></TableCell>
+                    <TableCell><span className="text-sm">{'⭐'.repeat(s.rating)}</span></TableCell>
+                    <TableCell><Badge variant={s.status === 'active' ? 'default' : 'secondary'}>{s.status === 'active' ? 'نشط' : 'غير نشط'}</Badge></TableCell>
+                    <TableCell>
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(s)}><Edit2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => { deleteSupplier(s.id); toast.success('تم حذف المورد'); }}><Trash2 className="h-4 w-4" /></Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 

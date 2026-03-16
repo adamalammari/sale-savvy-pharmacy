@@ -110,45 +110,46 @@ export default function Customers() {
         <Input className="pr-9" placeholder="بحث بالاسم أو الهاتف أو رقم التأمين..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
-      {/* Table */}
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-right">العميل</TableHead>
-                <TableHead className="text-right">الهاتف</TableHead>
-                <TableHead className="text-right">التأمين</TableHead>
-                <TableHead className="text-right">الحساسية</TableHead>
-                <TableHead className="text-right">المشتريات</TableHead>
-                <TableHead className="text-right">آخر زيارة</TableHead>
-                <TableHead className="text-right">إجراءات</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filtered.map((c, i) => (
-                <motion.tr key={c.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }} className="border-b hover:bg-muted/50">
-                  <TableCell><p className="font-medium text-sm">{c.name}</p></TableCell>
-                  <TableCell className="text-sm font-mono">{c.phone}</TableCell>
-                  <TableCell>{c.insuranceProvider ? <Badge variant="outline" className="text-xs">{c.insuranceProvider}</Badge> : <span className="text-xs text-muted-foreground">-</span>}</TableCell>
-                  <TableCell>
-                    <div className="flex gap-1 flex-wrap">
-                      {c.allergies.length > 0 ? c.allergies.map(a => <Badge key={a} variant="destructive" className="text-xs">{a}</Badge>) : <span className="text-xs text-muted-foreground">لا يوجد</span>}
-                    </div>
-                  </TableCell>
-                  <TableCell><span className="text-sm font-medium">{c.totalSpent.toLocaleString()} ر.س</span></TableCell>
-                  <TableCell className="text-sm">{new Date(c.lastVisit).toLocaleDateString('ar-SA')}</TableCell>
-                  <TableCell>
-                    <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => setViewCustomer(c)}><Eye className="h-4 w-4" /></Button>
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(c)}><Edit2 className="h-4 w-4" /></Button>
-                      <Button variant="ghost" size="icon" className="text-destructive" onClick={() => { deleteCustomer(c.id); toast.success('تم حذف العميل'); }}><Trash2 className="h-4 w-4" /></Button>
-                    </div>
-                  </TableCell>
-                </motion.tr>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-right min-w-[120px]">العميل</TableHead>
+                  <TableHead className="text-right min-w-[100px]">الهاتف</TableHead>
+                  <TableHead className="text-right min-w-[90px]">التأمين</TableHead>
+                  <TableHead className="text-right min-w-[100px]">الحساسية</TableHead>
+                  <TableHead className="text-right min-w-[90px]">المشتريات</TableHead>
+                  <TableHead className="text-right min-w-[90px]">آخر زيارة</TableHead>
+                  <TableHead className="text-right min-w-[90px]">إجراءات</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((c) => (
+                  <TableRow key={c.id} className="hover:bg-muted/50">
+                    <TableCell><p className="font-medium text-sm">{c.name}</p></TableCell>
+                    <TableCell className="text-sm font-mono whitespace-nowrap">{c.phone}</TableCell>
+                    <TableCell>{c.insuranceProvider ? <Badge variant="outline" className="text-xs whitespace-nowrap">{c.insuranceProvider}</Badge> : <span className="text-xs text-muted-foreground">-</span>}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-1 flex-wrap max-w-[120px]">
+                        {c.allergies.length > 0 ? c.allergies.slice(0, 2).map(a => <Badge key={a} variant="destructive" className="text-xs">{a}</Badge>) : <span className="text-xs text-muted-foreground">لا يوجد</span>}
+                      </div>
+                    </TableCell>
+                    <TableCell><span className="text-sm font-medium whitespace-nowrap">{c.totalSpent.toLocaleString()} ر.س</span></TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{new Date(c.lastVisit).toLocaleDateString('ar-SA')}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setViewCustomer(c)}><Eye className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(c)}><Edit2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => { deleteCustomer(c.id); toast.success('تم حذف العميل'); }}><Trash2 className="h-4 w-4" /></Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
