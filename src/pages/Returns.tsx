@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, RotateCcw, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+
 
 export default function Returns() {
   const { returns, addReturn, updateReturnStatus, sales } = usePharmacy();
