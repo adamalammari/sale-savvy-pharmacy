@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Search, Plus, FileText, Clock, CheckCircle, Eye, Pill } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+
 
 export default function Prescriptions() {
   const { prescriptions, addPrescription, dispensePrescriptionItem, updatePrescriptionStatus, customers, medicines } = usePharmacy();
