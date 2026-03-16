@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Plus, Edit2, Trash2, Truck, Star, Phone, Mail, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+
 
 const emptySupplier: {
   name: string; contactPerson: string; phone: string; email: string; address: string;
