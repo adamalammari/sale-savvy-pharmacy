@@ -182,36 +182,36 @@ export default function Inventory() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-right">الدواء</TableHead>
-                  <TableHead className="text-right">الفئة</TableHead>
-                  <TableHead className="text-right">السعر</TableHead>
-                  <TableHead className="text-right">المخزون</TableHead>
-                  <TableHead className="text-right">الحالة</TableHead>
-                  <TableHead className="text-right">تاريخ الانتهاء</TableHead>
-                  <TableHead className="text-right">إجراءات</TableHead>
+                  <TableHead className="text-right min-w-[160px]">الدواء</TableHead>
+                  <TableHead className="text-right min-w-[90px]">الفئة</TableHead>
+                  <TableHead className="text-right min-w-[70px]">السعر</TableHead>
+                  <TableHead className="text-right min-w-[80px]">المخزون</TableHead>
+                  <TableHead className="text-right min-w-[70px]">الحالة</TableHead>
+                  <TableHead className="text-right min-w-[100px]">تاريخ الانتهاء</TableHead>
+                  <TableHead className="text-right min-w-[80px]">إجراءات</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filtered.map((med, i) => (
-                  <motion.tr key={med.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }} className="border-b hover:bg-muted/50">
+                {filtered.map((med) => (
+                  <TableRow key={med.id} className="hover:bg-muted/50">
                     <TableCell>
                       <div>
                         <p className="font-medium text-sm">{med.name}</p>
                         <p className="text-xs text-muted-foreground">{med.genericName}</p>
                       </div>
                     </TableCell>
-                    <TableCell><Badge variant="outline" className="text-xs">{med.category}</Badge></TableCell>
-                    <TableCell className="font-medium">{med.price} ر.س</TableCell>
-                    <TableCell>{med.stock} {med.unit}</TableCell>
+                    <TableCell><Badge variant="outline" className="text-xs whitespace-nowrap">{med.category}</Badge></TableCell>
+                    <TableCell className="font-medium whitespace-nowrap">{med.price} ر.س</TableCell>
+                    <TableCell className="whitespace-nowrap">{med.stock} {med.unit}</TableCell>
                     <TableCell>{getStockBadge(med)}</TableCell>
-                    <TableCell className="text-sm">{new Date(med.expiryDate).toLocaleDateString('ar-SA')}</TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{new Date(med.expiryDate).toLocaleDateString('ar-SA')}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(med)}><Edit2 className="h-4 w-4" /></Button>
-                        <Button variant="ghost" size="icon" className="text-destructive" onClick={() => handleDelete(med.id, med.name)}><Trash2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(med)}><Edit2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(med.id, med.name)}><Trash2 className="h-4 w-4" /></Button>
                       </div>
                     </TableCell>
-                  </motion.tr>
+                  </TableRow>
                 ))}
                 {filtered.length === 0 && (
                   <TableRow>
