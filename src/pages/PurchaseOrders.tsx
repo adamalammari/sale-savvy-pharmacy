@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Package, Clock, CheckCircle, XCircle, Truck, Eye } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+
 
 export default function PurchaseOrders() {
   const { purchaseOrders, addPurchaseOrder, updatePurchaseOrderStatus, suppliers, medicines } = usePharmacy();
