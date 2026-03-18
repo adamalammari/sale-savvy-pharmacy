@@ -73,6 +73,9 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body);
     direction: rtl;
+    background-image:
+      radial-gradient(circle at 90% 8%, hsl(var(--primary) / 0.09), transparent 28%),
+      radial-gradient(circle at 14% 20%, hsl(var(--accent) / 0.06), transparent 24%);
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
