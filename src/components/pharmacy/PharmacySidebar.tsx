@@ -48,13 +48,13 @@ export function PharmacySidebar() {
               <NavLink
                 to={item.url}
                 end={item.url === '/'}
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-sidebar-accent"
-                activeClassName="bg-sidebar-accent text-sidebar-primary font-semibold"
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sidebar-foreground/85 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                activeClassName="bg-sidebar-primary/15 text-sidebar-primary font-semibold shadow-sm"
               >
                 <item.icon className="h-5 w-5 shrink-0" />
-                {!collapsed && <span className="flex-1">{item.title}</span>}
+                {!collapsed && <span className="flex-1 truncate">{item.title}</span>}
                 {!collapsed && badgeCount > 0 && (
-                  <Badge variant="destructive" className="mr-auto text-xs px-1.5 py-0.5 min-w-[20px] justify-center">
+                  <Badge variant="destructive" className="mr-auto min-w-[20px] justify-center px-1.5 py-0.5 text-xs">
                     {badgeCount}
                   </Badge>
                 )}
@@ -67,39 +67,39 @@ export function PharmacySidebar() {
   );
 
   return (
-    <Sidebar collapsible="icon" className="sidebar-glow border-l-0">
-      <SidebarContent>
+    <Sidebar side="right" collapsible="icon" className="sidebar-glow border-l border-sidebar-border/70">
+      <SidebarContent className="pt-2">
         <SidebarGroup>
           <SidebarGroupLabel className="flex items-center gap-2 px-4 py-6">
             <Pill className="h-6 w-6 text-sidebar-primary" />
-            {!collapsed && <span className="text-lg font-bold text-sidebar-primary">فارما بلس</span>}
+            {!collapsed && <span className="text-lg font-bold tracking-tight text-sidebar-primary">فارما بلس</span>}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             {renderNavItems(mainNav, { '/inventory': lowStock })}
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {!collapsed && <Separator className="mx-3 bg-sidebar-border" />}
+        {!collapsed && <Separator className="mx-3 bg-sidebar-border/70" />}
 
         <SidebarGroup>
-          {!collapsed && <SidebarGroupLabel className="px-4 text-xs text-sidebar-foreground/50">الإدارة</SidebarGroupLabel>}
+          {!collapsed && <SidebarGroupLabel className="px-4 text-xs text-sidebar-foreground/60">الإدارة</SidebarGroupLabel>}
           <SidebarGroupContent>
             {renderNavItems(managementNav)}
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {!collapsed && <Separator className="mx-3 bg-sidebar-border" />}
+        {!collapsed && <Separator className="mx-3 bg-sidebar-border/70" />}
 
         <SidebarGroup>
-          {!collapsed && <SidebarGroupLabel className="px-4 text-xs text-sidebar-foreground/50">أخرى</SidebarGroupLabel>}
+          {!collapsed && <SidebarGroupLabel className="px-4 text-xs text-sidebar-foreground/60">أخرى</SidebarGroupLabel>}
           <SidebarGroupContent>
             {renderNavItems(otherNav, { '/notifications': unreadNotificationsCount })}
           </SidebarGroupContent>
         </SidebarGroup>
 
         {!collapsed && lowStock > 0 && (
-          <div className="mx-3 mt-auto mb-4 rounded-lg bg-destructive/10 p-3">
-            <div className="flex items-center gap-2 text-destructive text-sm font-medium">
+          <div className="mx-3 mb-4 mt-auto rounded-xl border border-destructive/20 bg-destructive/10 p-3">
+            <div className="flex items-center gap-2 text-sm font-medium text-destructive">
               <AlertTriangle className="h-4 w-4" />
               <span>{lowStock} أدوية منخفضة المخزون</span>
             </div>

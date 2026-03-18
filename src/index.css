@@ -84,13 +84,13 @@
 
 @layer utilities {
   .glass-card {
-    @apply bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg;
+    @apply border border-border/70 bg-card/85 shadow-[0_10px_30px_-18px_hsl(var(--foreground)/0.35)] backdrop-blur-xl;
   }
   .stat-card {
-    @apply bg-card rounded-xl border border-border/50 shadow-sm p-5 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5;
+    @apply rounded-2xl border border-border/70 bg-card/95 p-5 shadow-[0_8px_25px_-20px_hsl(var(--foreground)/0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_35px_-20px_hsl(var(--primary)/0.35)];
   }
   .sidebar-glow {
-    box-shadow: 4px 0 24px -4px hsl(168 72% 36% / 0.15);
+    box-shadow: -8px 0 28px -16px hsl(var(--sidebar-primary) / 0.45);
   }
   .animate-fade-in {
     animation: fadeIn 0.3s ease-in-out;
