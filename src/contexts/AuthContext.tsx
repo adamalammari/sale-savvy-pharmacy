@@ -13,7 +13,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<{ username: string; role: string } | null>(null);
 
   const login = useCallback((username: string, password: string) => {
-    if (username === 'admin' && password === 'admin123') {
+    if (username.trim().toLowerCase() === 'admin' && password.trim() === 'admin123') {
       setUser({ username: 'admin', role: 'مدير النظام' });
       return true;
     }
