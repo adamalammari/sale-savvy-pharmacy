@@ -10,11 +10,11 @@ interface StatCardProps {
 }
 
 const colorMap = {
-  primary: 'bg-primary/10 text-primary',
-  accent: 'bg-accent/10 text-accent',
-  success: 'bg-success/10 text-success',
-  info: 'bg-info/10 text-info',
-  destructive: 'bg-destructive/10 text-destructive',
+  primary: 'bg-primary/12 text-primary ring-1 ring-primary/20',
+  accent: 'bg-accent/12 text-accent ring-1 ring-accent/20',
+  success: 'bg-success/12 text-success ring-1 ring-success/20',
+  info: 'bg-info/12 text-info ring-1 ring-info/20',
+  destructive: 'bg-destructive/12 text-destructive ring-1 ring-destructive/20',
 };
 
 export function StatCard({ title, value, icon: Icon, trend, color }: StatCardProps) {

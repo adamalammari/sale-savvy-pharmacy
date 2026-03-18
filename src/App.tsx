@@ -32,14 +32,14 @@ function AppContent() {
     <PharmacyProvider>
       <SettingsProvider>
         <SidebarProvider>
-          <div className="min-h-screen flex w-full">
+          <div className="min-h-dvh flex w-full overflow-hidden bg-background">
             <PharmacySidebar />
-            <div className="flex-1 flex flex-col min-w-0">
-              <header className="h-12 flex items-center border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-                <SidebarTrigger className="mr-2" />
-                <span className="text-sm text-muted-foreground">نظام إدارة الصيدلية المتكامل</span>
+            <div className="flex min-w-0 flex-1 flex-col">
+              <header className="sticky top-0 z-20 flex h-14 items-center border-b border-border/70 bg-card/90 px-3 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+                <SidebarTrigger className="mr-1" />
+                <span className="text-sm font-medium text-muted-foreground">نظام إدارة الصيدلية المتكامل</span>
               </header>
-              <main className="flex-1 overflow-y-auto">
+              <main className="flex-1 overflow-y-auto bg-muted/20">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/inventory" element={<Inventory />} />
