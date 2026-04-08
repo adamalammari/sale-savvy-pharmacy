@@ -29,8 +29,8 @@ export default function ActivityLog() {
     ...prescriptions.map(p => ({
       id: p.id,
       type: 'prescription' as const,
-      title: `وصفة - ${p.prescriptionNumber}`,
-      description: `${p.patientName} • ${p.items.length} دواء`,
+      title: `وصفة - ${p.customerName}`,
+      description: `د. ${p.doctorName} • ${p.items.length} دواء`,
       date: p.date,
       icon: FileText,
       color: 'text-info',

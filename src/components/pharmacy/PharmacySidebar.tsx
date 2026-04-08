@@ -29,6 +29,8 @@ const managementNav = [
 
 const otherNav = [
   { title: 'التقارير', url: '/reports', icon: FileBarChart },
+  { title: 'سجل النشاط', url: '/activity-log', icon: Activity },
+  { title: 'الأدوية المنتهية', url: '/expired-medicines', icon: Calendar },
   { title: 'التنبيهات', url: '/notifications', icon: Bell },
   { title: 'الإعدادات', url: '/settings', icon: Settings },
 ];

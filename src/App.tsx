@@ -69,6 +69,8 @@ function AppContent() {
                   <Route path="/returns" element={<Returns />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/activity-log" element={<ActivityLog />} />
+                  <Route path="/expired-medicines" element={<ExpiredMedicines />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
