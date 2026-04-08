@@ -32,7 +32,7 @@ function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   return (
     <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 rounded-xl">
-      {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-yellow-400" />}
+      {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-warning" />}
     </Button>
   );
 }
