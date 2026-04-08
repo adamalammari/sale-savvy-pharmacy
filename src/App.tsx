@@ -22,6 +22,8 @@ import Prescriptions from "./pages/Prescriptions";
 import Returns from "./pages/Returns";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
+import ActivityLog from "./pages/ActivityLog";
+import ExpiredMedicines from "./pages/ExpiredMedicines";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
