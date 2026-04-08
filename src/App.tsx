@@ -6,7 +6,10 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { PharmacyProvider } from "@/contexts/PharmacyContext";
 import { SettingsProvider } from "@/contexts/SettingsContext";
+import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { PharmacySidebar } from "@/components/pharmacy/PharmacySidebar";
+import { Button } from "@/components/ui/button";
+import { Moon, Sun } from "lucide-react";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
@@ -19,9 +22,20 @@ import Prescriptions from "./pages/Prescriptions";
 import Returns from "./pages/Returns";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
+import ActivityLog from "./pages/ActivityLog";
+import ExpiredMedicines from "./pages/ExpiredMedicines";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  return (
+    <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 rounded-xl">
+      {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-warning" />}
+    </Button>
+  );
+}
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
@@ -35,9 +49,12 @@ function AppContent() {
           <div className="min-h-dvh flex w-full overflow-hidden bg-background">
             <PharmacySidebar />
             <div className="flex min-w-0 flex-1 flex-col">
-              <header className="sticky top-0 z-20 flex h-14 items-center border-b border-border/70 bg-card/90 px-3 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-                <SidebarTrigger className="mr-1" />
-                <span className="text-sm font-medium text-muted-foreground">نظام إدارة الصيدلية المتكامل</span>
+              <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border/70 bg-card/90 px-3 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+                <div className="flex items-center gap-2">
+                  <SidebarTrigger className="mr-1" />
+                  <span className="text-sm font-medium text-muted-foreground">نظام إدارة الصيدلية المتكامل</span>
+                </div>
+                <ThemeToggle />
               </header>
               <main className="flex-1 overflow-y-auto bg-muted/20">
                 <Routes>
@@ -52,6 +69,8 @@ function AppContent() {
                   <Route path="/returns" element={<Returns />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/activity-log" element={<ActivityLog />} />
+                  <Route path="/expired-medicines" element={<ExpiredMedicines />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
@@ -65,14 +84,16 @@ function AppContent() {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
