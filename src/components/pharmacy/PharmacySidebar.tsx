@@ -1,6 +1,7 @@
 import {
   LayoutDashboard, Package, ShoppingCart, FileBarChart,
   AlertTriangle, Pill, Truck, Users, ClipboardList, FileText, RotateCcw, Bell, Settings,
+  Activity, Calendar,
 } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { usePharmacy } from '@/contexts/PharmacyContext';
